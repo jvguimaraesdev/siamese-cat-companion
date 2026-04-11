@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<!-- TOPO DO PROJETO -->
+ 
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <title>Siamese Cat Companion</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    
+<!-- HUD -->
+
+<div class="ui-left">
+    <button id="lang-btn">PT</button>
+    
+    <div class="food-section">
+        <h3 id="food-text">Food</h3>
+        
+        <div class="food-controls">
+            <button id="meow-btn">🐱 Meow</button>
+            <div class="food-container"></div>
+        </div>
+    </div> 
+
+</div>
+
+<!-- ELEMENTOS CENTRAIS -->
+ 
+<div class="center-panel">
+    <h2 id="interaction-text">Interact with him</h2>
+    
+    <div class="cat-container">
+        <img src="assets/images/siamese-cat.png" class="siamese-cat">
+        <div class="eye left-eye"></div>
+        <div class="eye right-eye"></div>
+    </div>
+</div>
+
+<!-- OUTROS ELEMENTOS -->
+ 
+<div class="food" id="food"></div>
+<div class="sound-wave" id="sound-wave"></div>
+
+<audio id="meow-sound" src="assets/audios/cat-meow.mp3"></audio>
+<audio id="purr-sound" src="assets/audios/cat-purr.mp3" loop></audio>
+<audio id="eating-sound" src="assets/audios/eating-sound.mp3"></audio>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

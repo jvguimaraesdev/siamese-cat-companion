@@ -1,0 +1,196 @@
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(#cfefff, #f8fcff);
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+}
+
+*{
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* HUD */
+
+.ui-left {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+
+    padding: 25px;
+    width: 250px;
+
+    background: rgba(255,255,255,0.55);
+    border-radius: 18px;
+    backdrop-filter: blur(8px);
+
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+#lang-btn {
+    margin-bottom: 30px;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #2c3e50;
+    color: white;
+    cursor: pointer;
+}
+
+#lang-btn:hover {
+    transform: scale(1.00);
+}
+
+/* TEXTOS */
+
+.food-section h3 {
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    color: #2c3e50;
+}
+
+.food-section h3::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 4px;
+    margin: 5px auto;
+    background: #b03a2e;
+}
+
+/* CONTROLES */
+
+.food-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+#meow-btn {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #b03a2e;
+    color: white;
+    cursor: pointer;
+}
+
+#meow-btn:hover {
+    transform: scale(1.00);
+}
+
+/* ALIMENTAÇÃO */
+
+.food-container {
+    width: 60px;
+    height: 60px;
+    border: 4px dashed #b03a2e;
+    border-radius: 10px;
+}
+
+.food {
+    position: fixed;
+    width: 22px;
+    height: 22px;
+    background: #c97a40;
+    border-radius: 50%;
+    cursor: grab;
+}
+
+.food:active {
+    cursor: grabbing;
+}
+
+/* MIGALHAS */
+
+.crumb {
+    position: fixed;
+    width: 5px;
+    height: 5px;
+    background: #ffd166;
+    border-radius: 50%;
+    opacity: 0.9;
+    box-shadow: 0 0 5px rgba(255,200,0,0.5);
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+/* ELEMENTOS CENTRAIS */
+
+.center-panel {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+h2 {
+    font-size: 35px;
+    color: #2c3e50;
+}
+
+/* GATO */
+
+.cat-container {
+    position: relative;
+    width: 400px;
+}
+
+.siamese-cat {
+    width: 100%;
+}
+
+/* OLHOS (POSIÇÃO E MOVIMENTO) */
+
+.eye {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: black;
+    border-radius: 50%;
+}
+
+.left-eye { top: 115px; left: 175px; }
+.right-eye { top: 115px; left: 225px; }
+
+/* EFEITO SONORO VISUAL */
+
+.sound-wave {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    border: 2px solid rgba(255,200,0,0.7);
+    border-radius: 50%;
+    opacity: 0;
+}
+
+/* ANIMAÇÕES */
+
+.cat-container.ronronar {
+    animation: purr 0.4s infinite;
+}
+
+@keyframes purr {
+    0% { transform: translate(0,0); }
+    50% { transform: translate(1px,-1px); }
+    100% { transform: translate(0,0); }
+}
+
+.cat-container.meow {
+    animation: meow 0.2s;
+}
+
+@keyframes meow {
+    50% { transform: scale(1.08); }
+}
+
+.cat-container.eat {
+    animation: eat 0.2s;
+}
+
+@keyframes eat {
+    50% { transform: translateX(2px); }
+}
