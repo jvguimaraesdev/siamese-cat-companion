@@ -2,21 +2,33 @@
 
 <h1 align= "center">🐱| Siamese Cat Companion</h1>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/PORTFOLIO-PROJECT-blue">
+</p>
+
 <!-- ANIMAÇÃO -->
 
 <p align="center">
-  <img src="assets/siamese-animation.gif" width="400">
+  <img src="assets/gifs/siamese-animation.gif" width="400">
 </p>
 
 <!-- LINK DO PROJETO -->
 
-<h2>Test the project</h2>
+<h2>Try it live</h2>
 
 <p>
   👉 
   <a href="https://jvguimaraesdev.github.io/siamese-cat-companion/" target="_blank">
-    Click here to try the project!
+    View project!
   </a>
+</p>
+
+<!-- PRÉ-VISUALIZAÇÃO -->
+
+<h2 align="center">Preview</h2>
+
+<p align="center">
+  <img src="assets/gifs/test-project.gif" width="420">
 </p>
 
 <!-- SOBRE O PROJETO -->
@@ -39,7 +51,7 @@
   <ul>
     <li>Eyes follow the mouse cursor;</li>
     <li>Meow button with visual effect;</li>
-    <li>Interactive sounds (meow, purr, and feeding);</li>
+    <li>Interactive sounds (meow, purr and feeding);</li>
     <li>Drag-and-drop feeding system;</li>
     <li>Language switching (EN / PT);</li>
     <li>Smooth animations.</li>
