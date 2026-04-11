@@ -28,7 +28,7 @@
 <h2 align="center">Preview</h2>
 
 <p align="center">
-  <img src="assets/gifs/test-project.gif" width="420">
+  <img src="assets/gifs/preview-project.gif" width="420">
 </p>
 
 <!-- SOBRE O PROJETO -->
