@@ -1,6 +1,6 @@
 <!-- TÍTULO -->
 
-<h1 align= "center">🐱| Siamese Cat Companion</h1>
+<h1 align="center">🐱| Siamese Cat Companion</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/PORTFOLIO-PROJECT-bc2c20">
