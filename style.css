@@ -6,7 +6,7 @@ body {
     overflow: hidden;
 }
 
-*{
+* {
     user-select: none;
     -webkit-user-select: none;
 }
@@ -21,11 +21,11 @@ body {
     padding: 25px;
     width: 250px;
 
-    background: rgba(255,255,255,0.55);
+    background: rgba(255, 255, 255, 0.55);
     border-radius: 18px;
     backdrop-filter: blur(8px);
 
-    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
 }
 
 #lang-btn {
@@ -39,7 +39,7 @@ body {
 }
 
 #lang-btn:hover {
-    transform: scale(1.00);
+    transform: scale(1.05);
 }
 
 /* TEXTOS */
@@ -79,7 +79,7 @@ body {
 }
 
 #meow-btn:hover {
-    transform: scale(1.00);
+    transform: scale(1.05);
 }
 
 /* ALIMENTAÇÃO */
@@ -113,7 +113,7 @@ body {
     background: #ffd166;
     border-radius: 50%;
     opacity: 0.9;
-    box-shadow: 0 0 5px rgba(255,200,0,0.5);
+    box-shadow: 0 0 5px rgba(255, 200, 0, 0.5);
     transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 }
 
@@ -153,8 +153,15 @@ h2 {
     border-radius: 50%;
 }
 
-.left-eye { top: 115px; left: 175px; }
-.right-eye { top: 115px; left: 225px; }
+.left-eye {
+    top: 115px;
+    left: 175px;
+}
+
+.right-eye {
+    top: 115px;
+    left: 225px;
+}
 
 /* EFEITO SONORO VISUAL */
 
@@ -162,7 +169,7 @@ h2 {
     position: fixed;
     width: 50px;
     height: 50px;
-    border: 2px solid rgba(255,200,0,0.7);
+    border: 2px solid rgba(255, 200, 0, 0.7);
     border-radius: 50%;
     opacity: 0;
 }
@@ -174,9 +181,17 @@ h2 {
 }
 
 @keyframes purr {
-    0% { transform: translate(0,0); }
-    50% { transform: translate(1px,-1px); }
-    100% { transform: translate(0,0); }
+    0% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(1px, -1px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
 }
 
 .cat-container.meow {
@@ -184,7 +199,9 @@ h2 {
 }
 
 @keyframes meow {
-    50% { transform: scale(1.08); }
+    50% {
+        transform: scale(1.08);
+    }
 }
 
 .cat-container.eat {
@@ -192,5 +209,7 @@ h2 {
 }
 
 @keyframes eat {
-    50% { transform: translateX(2px); }
+    50% {
+        transform: translateX(2px);
+    }
 }

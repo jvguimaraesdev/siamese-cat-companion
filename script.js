@@ -1,12 +1,7 @@
-// ESTADO DO PROJETO
-
-let isDraggingFood = false;
-let isCatEating = false;
-let isPT = false;
-
 // ELEMENTOS
 
 const cat = document.querySelector('.cat-container');
+const eyes = document.querySelectorAll('.eye');
 const food = document.getElementById('food');
 const foodContainer = document.querySelector('.food-container');
 
@@ -21,50 +16,77 @@ const interactionText = document.getElementById('interaction-text');
 const foodText = document.getElementById('food-text');
 const meowBtn = document.getElementById('meow-btn');
 
+const state = {
+  isDraggingFood: false,
+  isCatEating: false,
+  isPurring: false,
+  language: "en"
+};
+
+const translations = {
+  en: {
+    interaction: "Interact with him",
+    food: "Food",
+    meow: "🐱 Meow"
+  },
+  pt: {
+    interaction: "Interaja com ele",
+    food: "Comida",
+    meow: "🐱 Miar"
+  }
+};
+
 // INICIALIZAÇÃO
 
 function init() {
-    resetFoodPosition();
-    setupEventListeners();
-    purrSound.volume = 1;
-    meowSound.volume = 0.30;
+  setupEvents();
+  setupAudio();
+  resetFoodPosition();
+}
+
+function setupAudio() {
+  purrSound.volume = 1;
+  meowSound.volume = 0.30;
 }
 
 init();
 
 // EFEITOS SONOROS
 
-function setupEventListeners() {
-    langBtn.addEventListener('click', toggleLanguage);
-    meowBtn.addEventListener('click', handleMeow);
+function setupEvents() {
+  langBtn.addEventListener('click', toggleLanguage);
+  meowBtn.addEventListener('click', handleMeow);
 
-    document.addEventListener('mousemove', handleEyeTracking);
-    document.addEventListener('mousemove', handleFoodDragging);
-    document.addEventListener('mouseup', stopDraggingFood);
+  document.addEventListener('mousemove', handleEyeTracking);
+  document.addEventListener('mousemove', handleFoodDragging);
+  document.addEventListener('mouseup', stopDraggingFood);
+  document.addEventListener('mouseleave', stopDraggingFood);
 
-    food.addEventListener('mousedown', startDraggingFood);
+  food.addEventListener('mousedown', startDraggingFood);
 
-    cat.addEventListener('mouseenter', startPurring);
-    cat.addEventListener('mouseleave', stopPurring);
+  cat.addEventListener('mouseenter', startPurring);
+  cat.addEventListener('mouseleave', stopPurring);
 }
 
 // TRADUÇÃO
 
 function toggleLanguage() {
-    isPT = !isPT;
+  state.language = state.language === "en" ? "pt" : "en";
 
-    interactionText.textContent = isPT ? "Interaja com ele" : "Interact with him";
-    foodText.textContent = isPT ? "Comida" : "Food";
-    meowBtn.textContent = isPT ? "🐱 Miar" : "🐱 Meow";
-    langBtn.textContent = isPT ? "EN" : "PT";
+  const t = translations[state.language];
+
+  interactionText.textContent = t.interaction;
+  foodText.textContent = t.food;
+  meowBtn.textContent = t.meow;
+
+  langBtn.textContent = state.language === "en" ? "PT" : "EN";
 }
 
 // OLHOS (SEGUINDO O MOUSE)
 
 function handleEyeTracking(event) {
-    const eyes = document.querySelectorAll('.eye');
 
-    eyes.forEach(eye => {
+  eyes.forEach(eye => {
     const rect = eye.getBoundingClientRect();
 
     const dx = event.clientX - (rect.left + rect.width / 2);
@@ -74,159 +96,171 @@ function handleEyeTracking(event) {
     const distance = Math.min(Math.hypot(dx, dy), 8);
 
     eye.style.transform =
-    `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
-    });
+      `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
+  });
 }
 
 // MIAR DO GATO
 
 function handleMeow() {
-    if (isCatEating) return;
+  if (state.isCatEating) return;
 
-    meowSound.currentTime = 0;
-    meowSound.play();
+  meowSound.currentTime = 0;
+  meowSound.play();
 
-    cat.classList.add('meow');
-    setTimeout(() => cat.classList.remove('meow'), 200);
+  cat.classList.add('meow');
+  setTimeout(() => cat.classList.remove('meow'), 200);
 
-    animateSoundWave();
+  animateSoundWave();
 }
 
 function animateSoundWave() {
-    const rect = cat.getBoundingClientRect();
+  const rect = cat.getBoundingClientRect();
 
-    soundWave.style.left = rect.left + rect.width / 2 - 25 + 'px';
-    soundWave.style.top = rect.top + rect.height / 2 - 25 + 'px';
-    soundWave.style.opacity = 1;
+  soundWave.style.left = rect.left + rect.width / 2 - 25 + 'px';
+  soundWave.style.top = rect.top + rect.height / 2 - 25 + 'px';
+  soundWave.style.opacity = 1;
 
-    let startTime = null;
+  let startTime = null;
 
-    function animate(time) {
-        if (!startTime) startTime = time;
+  function animate(time) {
+    if (!startTime) startTime = time;
 
-        const progress = (time - startTime) / 300;
+    const progress = (time - startTime) / 300;
 
-        soundWave.style.transform = `scale(${1 + progress})`;
-        soundWave.style.opacity = 1 - progress;
+    soundWave.style.transform = `scale(${1 + progress})`;
+    soundWave.style.opacity = 1 - progress;
 
-        if (progress < 1) {
-            requestAnimationFrame(animate);
-        }
+    if (progress < 1) {
+      requestAnimationFrame(animate);
     }
+  }
 
-    requestAnimationFrame(animate);
+  requestAnimationFrame(animate);
 }
 
 // RONRONAR DO GATO
 
 function startPurring() {
-    if (!isDraggingFood && !isCatEating) {
-        purrSound.play();
-        cat.classList.add('ronronar');
-    }
+  if (state.isDraggingFood || state.isCatEating) return;
+
+  state.isPurring = true;
+  purrSound.currentTime = 0;
+  purrSound.play();
+  cat.classList.add('ronronar');
 }
 
+
 function stopPurring() {
-    purrSound.pause();
-    cat.classList.remove('ronronar');
+  state.isPurring = false;
+  purrSound.pause();
+  purrSound.currentTime = 0;
+  cat.classList.remove('ronronar');
 }
 
 // DRAG DA ALIMENTAÇÃO
 
 function startDraggingFood() {
-    isDraggingFood = true;
+  state.isDraggingFood = true;
+  document.body.style.cursor = "grabbing";
 }
 
 function stopDraggingFood() {
-    isDraggingFood = false;
+  state.isDraggingFood = false;
+  document.body.style.cursor = "default";
 }
 
 function handleFoodDragging(event) {
-    if (!isDraggingFood) return;
+  if (!state.isDraggingFood || state.isCatEating) return;
 
-    food.style.left = (event.clientX - 10) + 'px';
-    food.style.top = (event.clientY - 10) + 'px';
+  food.style.left = (event.clientX - 10) + 'px';
+  food.style.top = (event.clientY - 10) + 'px';
 
-    checkIfFoodIsNearCat();
+  checkIfFoodIsNearCat();
 }
 
 // SISTEMA DE ALIMENTAÇÃO
 
 function checkIfFoodIsNearCat() {
-    const catRect = cat.getBoundingClientRect();
-    const foodRect = food.getBoundingClientRect();
+  const catRect = cat.getBoundingClientRect();
+  const foodRect = food.getBoundingClientRect();
 
-// DISTÂNCIA DA COMIDA (ATÉ A BOCA DO GATO)
+  // DISTÂNCIA DA COMIDA (ATÉ A BOCA DO GATO)
 
-    const dx = (foodRect.left + 10) - (catRect.left + catRect.width / 2);
-    const dy = (foodRect.top + 10) - (catRect.top + catRect.height * 0.48);
+  const dx = (foodRect.left + 10) - (catRect.left + catRect.width / 2);
+  const dy = (foodRect.top + 10) - (catRect.top + catRect.height * 0.48);
 
-    const distance = Math.hypot(dx, dy);
+  const distance = Math.hypot(dx, dy);
 
-    if (distance < 25) {
-        handleEat(foodRect.left + 10, foodRect.top + 10);
-    }
+  if (distance < 25) {
+    handleEat(foodRect.left + 10, foodRect.top + 10);
+  }
 }
 
 function handleEat(x, y) {
-    if (isCatEating) return;
+  if (state.isCatEating) return;
 
-    isCatEating = true;
-    isDraggingFood = false;
+  state.isCatEating = true;
+  state.isDraggingFood = false;
 
-    stopPurring();
+  document.body.style.cursor = "default";
+  food.style.pointerEvents = "none";
 
-    eatingSound.currentTime = 0;
-    eatingSound.play();
+  stopPurring();
 
-    createCrumbs(x, y);
+  eatingSound.currentTime = 0;
+  eatingSound.play();
 
-    cat.classList.add('eat');
+  createCrumbs(x, y);
 
-    food.style.transform = 'scale(0)';
-    food.style.opacity = '0';
+  cat.classList.add('eat');
 
-    setTimeout(() => {
-        resetFoodPosition();
+  food.style.transform = 'scale(0)';
+  food.style.opacity = '0';
 
-        food.style.transform = 'scale(1)';
-        food.style.opacity = '1';
+  setTimeout(() => {
+    resetFoodPosition();
 
-        cat.classList.remove('eat');
-        isCatEating = false;
-    }, 150);
+    food.style.transform = 'scale(1)';
+    food.style.opacity = '1';
+    food.style.pointerEvents = 'auto';
+
+    cat.classList.remove('eat');
+    state.isCatEating = false;
+  }, 150);
 }
 
 // EFEITO DE MIGALHAS
 
 function createCrumbs(x, y) {
-    for (let i = 0; i < 5; i++) {
-        const crumb = document.createElement('div');
-        crumb.className = 'crumb';
+  for (let i = 0; i < 5; i++) {
+    const crumb = document.createElement('div');
+    crumb.className = 'crumb';
 
-        document.body.appendChild(crumb);
+    document.body.appendChild(crumb);
 
-        crumb.style.left = x + 'px';
-        crumb.style.top = y + 'px';
+    crumb.style.left = x + 'px';
+    crumb.style.top = y + 'px';
 
-        const angle = Math.random() * Math.PI * 2;
-        const distance = Math.random() * 15;
+    const angle = Math.random() * Math.PI * 2;
+    const distance = Math.random() * 15;
 
-        requestAnimationFrame(() => {
-            crumb.style.transform =
-                `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
-            crumb.style.opacity = 0;
-        });
+    requestAnimationFrame(() => {
+      crumb.style.transform =
+        `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
+      crumb.style.opacity = 0;
+    });
 
-        setTimeout(() => crumb.remove(), 400);
-    }
+    setTimeout(() => crumb.remove(), 400);
+  }
 }
 
 // RESET DA ALIMENTAÇÃO
 
 function resetFoodPosition() {
-    const rect = foodContainer.getBoundingClientRect();
+  const offset = 10;
+  const rect = foodContainer.getBoundingClientRect();
 
-    food.style.left = rect.left + rect.width / 2 - 10 + 'px';
-    food.style.top = rect.top + rect.height / 2 - 10 + 'px';
+  food.style.left = rect.left + rect.width / 2 - offset + 'px';
+  food.style.top = rect.top + rect.height / 2 - offset + 'px';
 }
